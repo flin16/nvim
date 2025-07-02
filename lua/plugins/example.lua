@@ -379,6 +379,10 @@ return {
       })
     end,
   },
+  {
+    "gbprod/yanky.nvim",
+    enabled = vim.env.SSH_CONNECTION == nil,
+  },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --

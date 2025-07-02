@@ -18,6 +18,26 @@ elseif vim.fn.has("wsl") == 1 then
     cache_enabled = 0,
   }
   vim.opt.fileformat = "unix"
+elseif vim.env.SSH_CONNECTION then
+  vim.o.clipboard = "unnamedplus"
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste,
+    },
+  }
 end
 vim.g.copilot_no_tab_map = true
 vim.o.guifont = "Monaco:h16"
