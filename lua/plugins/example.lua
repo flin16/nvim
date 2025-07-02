@@ -379,7 +379,6 @@ return {
       })
     end,
   },
-  { "ojroques/nvim-osc52" },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
