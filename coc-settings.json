@@ -4,4 +4,5 @@
   "inlayHint.enable": false,
   "codeLens.enable": false,
   "snippets.ultisnips.pythonPrompt": false,
+  "inlineSuggest.autoTrigger": false,
 }

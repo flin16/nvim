@@ -383,6 +383,7 @@ return {
     "gbprod/yanky.nvim",
     enabled = vim.env.SSH_CONNECTION == nil,
   },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
