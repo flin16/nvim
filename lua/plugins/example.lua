@@ -209,10 +209,11 @@ return {
     event = "LspAttach",
     opts = {},
   },
-  {
-    "flin16/vim-overleaf",
-    ft = { "bib", "tex", "latex" },
-  },
+  -- TODO: still need to speed up
+  -- {
+  --   "flin16/vim-overleaf",
+  --   ft = { "bib", "tex", "latex" },
+  -- },
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -309,7 +310,7 @@ return {
       },
     },
   },
-  { "rachartier/tiny-code-action.nvim" },
+  { "rachartier/tiny-code-action.nvim", event = "LazyFile" },
   {
     "nvimtools/none-ls.nvim",
     event = "LazyFile",
