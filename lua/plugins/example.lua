@@ -355,6 +355,38 @@ return {
     enabled = vim.env.SSH_CONNECTION == nil,
   },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>yy",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        "<leader>yY",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<leader>yt",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    opts = {
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+    init = function()
+      vim.g.loaded_netrwPlugin = 1
+    end,
+  },
+  { "mfussenegger/nvim-dap-python", ft = { "python" } },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
