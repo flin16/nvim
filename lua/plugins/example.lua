@@ -101,34 +101,6 @@ return {
     end,
   },
   {
-    "mfussenegger/nvim-dap-python",
-    ft = "python",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
-    config = function()
-      local dap = require("dap")
-      dap.adapters.python = {
-        type = "executable",
-        command = "python",
-        args = { "-m", "debugpy.adapter" },
-      }
-
-      dap.configurations.python = {
-        {
-          type = "python",
-          request = "launch",
-          name = "Launch file",
-          console = "integratedTerminal",
-          program = "${file}",
-          pythonPath = function()
-            return "python"
-          end,
-        },
-      }
-    end,
-  },
-  {
     "amitds1997/remote-nvim.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -200,25 +172,23 @@ return {
     },
     opts = {},
     config = function(_, opts)
-      local dap = require("dap")
+      -- local dap = require("dap")
       local dapui = require("dapui")
       dapui.setup(opts)
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-      end
+      -- dap.listeners.after.event_initialized["dapui_config"] = function()
+      --   dapui.open()
+      -- end
       -- This would make dapui exit too early
       -- dap.listeners.before.event_terminated["dapui_config"] = function()
       --   dapui.close({})
       -- end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close({})
-      end
+      -- dap.listeners.before.event_exited["dapui_config"] = function()
+      --   dapui.close({})
+      -- end
     end,
   },
   -- TODO: reduce annoying notifications
   { "HakonHarnes/img-clip.nvim" },
-  -- TODO: test this
-  { "petertriho/nvim-scrollbar" },
   {
     "rachartier/tiny-code-action.nvim",
     dependencies = {
