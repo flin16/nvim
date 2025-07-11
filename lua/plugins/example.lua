@@ -29,6 +29,8 @@ return {
         { "<localleader>d", group = "debug", mode = { "n", "v" } },
         { "<localleader>r", icon = "󰑕", group = "Rename (COC)" },
         { "<leader>a", group = "AI", mode = { "n", "v" } },
+        -- TODO: add color to it
+        { "<leader>y", group = "Yazi", icon = "󰇥" },
       },
       -- name = "\\",
       -- d = { name = "+debug" },
@@ -387,6 +389,31 @@ return {
     end,
   },
   { "mfussenegger/nvim-dap-python", ft = { "python" } },
+  {
+    "nvim-neotest/neotest-python",
+    ft = { "python" },
+    dependencies = {
+      "nvim-neotest/neotest",
+    },
+    config = function()
+      local test = require("neotest")
+      ---@diagnostic disable-next-line: missing-fields
+      test.setup({
+        adapters = {
+          require("neotest-python")({
+            dap = { justMyCode = false },
+            args = { "--log-level", "DEBUG" },
+            runner = "pytest",
+            python = "python3",
+            -- is_test_file = function(file_path)
+            --   ...
+            -- end,
+            pytest_discover_instances = true,
+          }),
+        },
+      })
+    end,
+  },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --

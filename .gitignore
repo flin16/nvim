@@ -11,3 +11,4 @@ lua/plugins/.example.lua.swp
 blink-disabled
 lua/local.lua
 lazy-lock.json
+lua/config/local.lua
