@@ -26,6 +26,9 @@ keyset("o", "<BS>", "d", { noremap = true, desc = "Backspace in normal mode" })
 --TODO: This does not work due to which-key
 keyset({ "x", "v" }, "<BS>", '"1x', { noremap = true, desc = "Backspace in normal mode" })
 -- keyset("v", "x", '"_x', { noremap = true, desc = "Delete without saving to clipboard" })
+keyset("n", "Q", function()
+  vim.cmd("quit")
+end, { noremap = true, silent = true, desc = "Close current window" })
 --Config lsp vimtex keymaps
 -- TODO: make this workqq
 -- vim.keymap.set("n", "<locallleader>ls", function()
