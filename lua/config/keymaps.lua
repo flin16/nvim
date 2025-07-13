@@ -59,14 +59,12 @@ keyset("n", "<localleader>b", function()
   require("dap").toggle_breakpoint()
 end, { desc = "Dap: Toggle Breakpoint" })
 keyset("n", "<localleader>dr", function()
-  require("dap").repl.open()
-end, { desc = "Dap: Open REPL" })
-keyset({ "n", "v" }, "<localleader>dh", function()
-  require("dap.ui.widgets").hover()
-end, { desc = "Print variable (Hover Mode)" })
-keyset({ "n", "v" }, "<localleader>dp", function()
-  require("dap.ui.widgets").preview()
-end, { desc = "Print variable (Preview Mode)" })
+  if require("dapui.windows").layouts[2]:is_open() then
+    require("dapui").close({ layout = 2 })
+  else
+    require("dapui").open({ layout = 2 })
+  end
+end, { desc = "Dapui: Toggle REPL" })
 
 -- Configure Coc.nvim keymaps
 keyset("n", "<localleader>r", "<Plug>(coc-rename)", { desc = "Rename (Coc)" })
