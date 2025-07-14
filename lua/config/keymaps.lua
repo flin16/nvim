@@ -58,13 +58,13 @@ end, { desc = "Toggle virtual text of dap" })
 keyset("n", "<localleader>b", function()
   require("dap").toggle_breakpoint()
 end, { desc = "Dap: Toggle Breakpoint" })
-keyset("n", "<localleader>dr", function()
+keyset("n", "<leader>dr", function()
   if require("dapui.windows").layouts[2]:is_open() then
     require("dapui").close({ layout = 2 })
   else
     require("dapui").open({ layout = 2 })
   end
-end, { desc = "Dapui: Toggle REPL" })
+end, { desc = "Dap UI: Toggle REPL" })
 
 -- Configure Coc.nvim keymaps
 keyset("n", "<localleader>r", "<Plug>(coc-rename)", { desc = "Rename (Coc)" })

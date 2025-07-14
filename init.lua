@@ -1,15 +1,10 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 require("config.debugger").setup()
-local function file_exists(name)
-  local f = io.open(name, "r")
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
-end
-if file_exists(vim.fn.stdpath("config") .. "/lua/config/local.lua") then
+if vim.fn.filereadable(vim.fn.stdpath("config") .. "/lua/config/local.lua") then
   require("config.local")
+end
+local project_config = vim.fn.getcwd() .. "/.nvim.lua"
+if vim.fn.filereadable(project_config) == 1 then
+  dofile(project_config)
 end

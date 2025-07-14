@@ -29,6 +29,23 @@ function M.setup()
       -- trace = true,
     },
   }
+  -- Debug the python module
+  table.insert(dap.configurations.python, {
+    type = "python",
+    request = "launch",
+    name = "Launch Module",
+    module = function()
+      local file = vim.fn.expand("%:p") -- /.../game/unit.py
+      local file_dir = vim.fn.fnamemodify(file, ":h") -- /.../game
+      local dir_name = vim.fn.fnamemodify(file_dir, ":t") -- game
+      local base_name = vim.fn.fnamemodify(file, ":t:r") -- unit
+      return dir_name .. "." .. base_name
+    end,
+    cwd = function()
+      return vim.fn.expand("%:p:h:h")
+    end,
+    console = "integratedTerminal",
+  })
 end
 
 return M
