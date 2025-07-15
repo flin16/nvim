@@ -156,6 +156,7 @@ return {
     "rcarriga/nvim-dap-ui",
     dependencies = { "nvim-neotest/nvim-nio" },
     opts = {},
+    event = "LspAttach",
     config = function(_, opts)
       local dap = require("dap")
       local dapui = require("dapui")
@@ -370,7 +371,7 @@ return {
       vim.g.loaded_netrwPlugin = 1
     end,
   },
-  { "mfussenegger/nvim-dap-python", ft = { "python" } },
+  { "mfussenegger/nvim-dap-python", ft = { "python" }, event = "LspAttach" },
   {
     "nvim-neotest/neotest-python",
     ft = { "python" },
