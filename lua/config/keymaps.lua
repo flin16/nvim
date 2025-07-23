@@ -20,9 +20,10 @@ map_nv("C", '"1C', { desc = "Change and put the deleted part into secondary clip
 -- Commented otherwise we could not use xp to interchange
 map_nv("x", '"1x', { desc = "Delete and put the deleted part into secondary clipboard" })
 map_nv("X", '"1X', { desc = "Delete and put the deleted part into secondary clipboard" })
-map_nv("<C-d>", '"1d', { desc = "Delete and put the deleted part into secondary clipboard" })
+-- map_nv("<C-d>", '"1d', { desc = "Delete and put the deleted part into secondary clipboard" })
 keyset("n", "<BS>", '"1d', { noremap = true, desc = "Backspace in normal mode" })
 keyset("o", "<BS>", "d", { noremap = true, desc = "Backspace in normal mode" })
+keyset("v", "<Del>", '"_d', { noremap = true, desc = "Delete without saving to clipboard" })
 --TODO: This does not work due to which-key
 keyset({ "x", "v" }, "<BS>", '"1x', { noremap = true, desc = "Backspace in normal mode" })
 -- keyset("v", "x", '"_x', { noremap = true, desc = "Delete without saving to clipboard" })
