@@ -102,15 +102,16 @@ return {
       vim.b.coc_suggest_disable = true
     end,
   },
-  {
-    "amitds1997/remote-nvim.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = true,
-  },
+  -- TODO: remove this
+  -- {
+  --   "amitds1997/remote-nvim.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   config = true,
+  -- },
   {
     "folke/snacks.nvim",
     opts = {
@@ -173,7 +174,7 @@ return {
     end,
   },
   -- TODO: reduce annoying notifications
-  { "HakonHarnes/img-clip.nvim" },
+  { "HakonHarnes/img-clip.nvim", ft = { "markdown", "tex" } },
   {
     "rachartier/tiny-code-action.nvim",
     dependencies = {
@@ -217,6 +218,7 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
+    event = "VeryLazy",
     dependencies = {
       "j-hui/fidget.nvim",
     },
@@ -339,7 +341,15 @@ return {
     "gbprod/yanky.nvim",
     enabled = vim.env.SSH_CONNECTION == nil,
   },
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    lazy = true,
+    opts = {
+      transparent_background = true,
+    },
+  },
   {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
@@ -396,6 +406,24 @@ return {
         },
       })
     end,
+  },
+  {
+    "pxwg/math-conceal.nvim",
+    event = "VeryLazy",
+    build = "make lua51",
+    main = "math-conceal",
+    opts = {
+      enabled = true,
+      conceal = {
+        "greek",
+        "script",
+        "math",
+        "font",
+        "delim",
+        "phy",
+      },
+      ft = { "*.tex", "*.md", "*.typ" },
+    },
   },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
