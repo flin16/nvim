@@ -425,6 +425,12 @@ return {
       ft = { "*.tex", "*.md", "*.typ" },
     },
   },
+  {
+    "aserowy/tmux.nvim",
+    config = function()
+      return require("tmux").setup()
+    end,
+  },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
