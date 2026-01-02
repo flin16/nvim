@@ -13,6 +13,7 @@ if file_exists(vim.fn.stdpath("config") .. "/lua/config/local.lua") then
 end
 require("config.lazy")
 require("config.debugger").setup()
+vim.cmd.colorscheme("catppuccin")
 local project_config = vim.fn.getcwd() .. "/.nvim.lua"
 if file_exists(project_config) == 1 then
   dofile(project_config)
