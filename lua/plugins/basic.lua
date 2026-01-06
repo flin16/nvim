@@ -194,6 +194,7 @@ return {
   {
     "nvimtools/none-ls.nvim",
     event = "LazyFile",
+    enable = false,
     init = function()
       LazyVim.on_very_lazy(function()
         -- register the formatter with LazyVim

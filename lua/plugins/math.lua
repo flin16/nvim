@@ -10,6 +10,7 @@ return {
       vim.g.vimtex_view_method = "skim"
       vim.g.vimtex_view_skim_sync = 1
       vim.g.vimtex_view_skim_activate = 1
+      vim.g.vimtex_latexmk_progname = "nvr"
       vim.g.vimtex_compiler_latexmk = {
         out_dir = "build", -- use a separate build directory
         callback = 1, -- enable callback
@@ -19,6 +20,7 @@ return {
           "-shell-escape", -- enable shell escape
           "-verbose", -- verbose output
           "-file-line-error", -- file line error messages
+          "-synctex=1",
         },
       }
       vim.g.vimtex_syntax_custom_cmds = {
@@ -33,22 +35,23 @@ return {
     "latex-lsp/texlab",
   },
   { "HakonHarnes/img-clip.nvim", ft = { "markdown", "tex" } },
-  {
-    "pxwg/math-conceal.nvim",
-    event = "VeryLazy",
-    build = "make lua51",
-    main = "math-conceal",
-    opts = {
-      enabled = true,
-      conceal = {
-        "greek",
-        "script",
-        "math",
-        "font",
-        "delim",
-        "phy",
-      },
-      ft = { "*.tex", "*.md", "*.typ" },
-    },
-  },
+  -- TODO: make this work
+  -- {
+  --   "pxwg/math-conceal.nvim",
+  --   event = "VeryLazy",
+  --   build = "make lua51",
+  --   main = "math-conceal",
+  --   opts = {
+  --     enabled = true,
+  --     conceal = {
+  --       "greek",
+  --       "script",
+  --       "math",
+  --       "font",
+  --       "delim",
+  --       "phy",
+  --     },
+  --     ft = { "*.tex", "*.md", "*.typ" },
+  --   },
+  -- },
 }
