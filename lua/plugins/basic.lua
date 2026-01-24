@@ -22,15 +22,13 @@ return {
   },
   {
     "folke/which-key.nvim",
-    -- TODO: Try to use this without warning
     opts = {
       spec = {
         { "<localleader>c", group = "code", mode = { "n", "v" } },
         { "<localleader>d", group = "debug", mode = { "n", "v" } },
         { "<localleader>r", icon = "󰑕", group = "Rename (COC)" },
         { "<leader>a", group = "AI", mode = { "n", "v" } },
-        -- TODO: add color to it
-        { "<leader>y", group = "Yazi", icon = "󰇥" },
+        { "<leader>y", group = "Yazi", icon = { icon = "󰇥", color = "orange" } },
       },
       -- name = "\\",
       -- d = { name = "+debug" },
@@ -76,16 +74,6 @@ return {
       vim.b.coc_suggest_disable = true
     end,
   },
-  -- TODO: remove this
-  -- {
-  --   "amitds1997/remote-nvim.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-telescope/telescope.nvim",
-  --   },
-  --   config = true,
-  -- },
   {
     "folke/snacks.nvim",
     opts = {
@@ -275,7 +263,14 @@ return {
       vim.g.loaded_netrwPlugin = 1
     end,
   },
-  { "mfussenegger/nvim-dap-python", ft = { "python" }, event = "LspAttach" },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    config = function()
+      local path = (vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV .. "/bin/python" or "python")
+      require("dap-python").setup(path)
+    end,
+  },
   {
     "nvim-neotest/neotest-python",
     ft = { "python" },
@@ -292,9 +287,6 @@ return {
             args = { "--log-level", "DEBUG" },
             runner = "pytest",
             python = "python3",
-            -- is_test_file = function(file_path)
-            --   ...
-            -- end,
             pytest_discover_instances = true,
           }),
         },
