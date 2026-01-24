@@ -40,8 +40,16 @@ return {
       -- Map <leader>ai to run CodeCompanion on the selected range in normal and visual modes
       {
         "<leader>ai",
-        "<CMD>CodeCompanion<CR>",
-        mode = { "n", "v" },
+        ":'<,'>CodeCompanion<CR>",
+        mode = "v",
+        noremap = true,
+        silent = true,
+        desc = "CodeCompanion inline",
+      },
+      {
+        "<leader>ai",
+        ":<Cmd>CodeCompanion<CR>",
+        mode = "n",
         noremap = true,
         silent = true,
         desc = "CodeCompanion inline",
