@@ -25,7 +25,8 @@ return {
       "j-hui/fidget.nvim",
     },
     init = function()
-      require("utils.codecompanion_fidget_spinner"):init()
+      -- TODO: fix this
+      -- require("utils.codecompanion_fidget_spinner"):init()
     end,
     keys = {
       {
