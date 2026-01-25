@@ -299,6 +299,12 @@ return {
       return require("tmux").setup()
     end,
   },
+  {
+    "kwkarlwang/bufresize.nvim",
+    config = function()
+      require("bufresize").setup()
+    end,
+  },
 }
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --

@@ -32,8 +32,8 @@ To launch, use `<leader>gg`.
      This will output a path like `/Users/yourname/.local/bin/nvr`. Use this as the command.
    - Parameters:
      ```bash
-     --servername /tmp/nvimsocket +"%line" "%file"
-     ```
+     --remote-silent +%line '%file'
+--remote-silent +%line '%file'     ```
 4. Create an alias for convenience:
    ```bash
    alias neovide="neovide -- --listen /tmp/nvimsocket"
