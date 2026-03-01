@@ -26,7 +26,7 @@ return {
     },
     init = function()
       -- TODO: fix this
-      -- require("utils.codecompanion_fidget_spinner"):init()
+      require("utils.codecompanion_fidget_spinner"):init()
     end,
     keys = {
       {
