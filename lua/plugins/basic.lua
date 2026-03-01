@@ -76,6 +76,13 @@ return {
   },
   {
     "folke/snacks.nvim",
+    keys = {
+      {
+        "<leader>s:",
+        require("utils.pickers").history,
+        desc = "Picker History",
+      },
+    },
     opts = {
       picker = {
         sources = {
@@ -303,6 +310,16 @@ return {
     "kwkarlwang/bufresize.nvim",
     config = function()
       require("bufresize").setup()
+    end,
+  },
+  -- Test this
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("lsp-file-operations").setup()
     end,
   },
 }

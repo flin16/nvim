@@ -1,6 +1,8 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+-- Remember this file, is usually only used to bind keys that is not related to any specific plugin.
+-- TODO: move other key bindings to plugin config files
 local keyset = vim.keymap.set
 local function map_nv(lhs, rhs, opts)
   local modes = { "n", "v" }
@@ -24,18 +26,11 @@ map_nv("X", '"1X', { desc = "Delete and put the deleted part into secondary clip
 keyset("n", "<BS>", '"_d', { noremap = true, desc = "Backspace in normal mode" })
 keyset("o", "<BS>", "d", { noremap = true, desc = "Backspace in normal mode" })
 keyset("v", "<Del>", '"_d', { noremap = true, desc = "Delete without saving to clipboard" })
---TODO: This does not work due to which-key
 keyset({ "x", "v" }, "<BS>", '"_x', { noremap = true, desc = "Backspace in normal mode" })
 -- keyset("v", "x", '"_x', { noremap = true, desc = "Delete without saving to clipboard" })
 keyset("n", "Q", function()
   vim.cmd("quit")
 end, { noremap = true, silent = true, desc = "Close current window" })
---Config lsp vimtex keymaps
--- TODO: make this workqq
--- vim.keymap.set("n", "<locallleader>ls", function()
---   vim.b.vimtex_main = vim.fn.expand("%:p")
---   vim.cmd("VimtexReloadState")
--- end, { noremap = true, desc = "Set current buffer as vimtex main" })
 
 -- Config Dap keymaps
 map_all_mode("<F5>", function()
