@@ -33,16 +33,30 @@ function M.setup()
   table.insert(dap.configurations.python, {
     type = "python",
     request = "launch",
-    name = "Launch Module",
+    name = "Launch Current Module (Strict)",
     module = function()
-      local file = vim.fn.expand("%:p") -- /.../game/unit.py
-      local file_dir = vim.fn.fnamemodify(file, ":h") -- /.../game
-      local dir_name = vim.fn.fnamemodify(file_dir, ":t") -- game
-      local base_name = vim.fn.fnamemodify(file, ":t:r") -- unit
-      return dir_name .. "." .. base_name
+      local root_file = vim.fs.find({ ".git", "pyproject.toml", "requirements.txt" }, {
+        upward = true,
+        path = vim.fn.expand("%:p:h"),
+      })[1]
+
+      if not root_file then
+        return nil
+      end
+
+      local root = vim.fs.dirname(root_file)
+      local file = vim.fn.expand("%:p")
+
+      local rel_path = file:sub(#root + 2)
+
+      local module_path = rel_path:gsub("/", "."):gsub("%.py$", "")
+
+      print("Debug: Executing 'python -m " .. module_path .. "'")
+      return module_path
     end,
     cwd = function()
-      return vim.fn.expand("%:p:h:h")
+      local root_file = vim.fs.find({ ".git", "pyproject.toml" }, { upward = true, path = vim.fn.expand("%:p:h") })[1]
+      return root_file and vim.fs.dirname(root_file) or vim.fn.getcwd()
     end,
     console = "integratedTerminal",
   })
