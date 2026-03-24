@@ -30,7 +30,7 @@ return {
     end,
     keys = {
       {
-        "<leader>aA",
+        "<leader>aa",
         "<CMD>CodeCompanionActions<CR>",
         mode = { "n", "v" },
         noremap = true,
@@ -55,7 +55,7 @@ return {
         desc = "CodeCompanion inline",
       },
       {
-        "<leader>aC",
+        "<leader>ac",
         "<CMD>CodeCompanionChat Toggle<CR>",
         mode = { "n", "v" },
         noremap = true,
