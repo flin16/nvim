@@ -6,7 +6,7 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
-if vim.env.ALACRITTY_SOCKET or vim.env.SSH_CONNECTION then
+if vim.env.SSH_CONNECTION then
   vim.api.nvim_create_augroup("RestoreCursorShapeOnExit", { clear = true })
 
   vim.api.nvim_create_autocmd("VimLeave", {

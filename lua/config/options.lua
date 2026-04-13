@@ -41,4 +41,4 @@ elseif vim.env.SSH_CONNECTION then
 end
 vim.g.copilot_no_tab_map = true
 vim.o.guifont = "Monaco:h16"
-vim.cmd("set wrap")
+vim.o.wrap = true

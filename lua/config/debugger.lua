@@ -1,62 +1,56 @@
 local M = {}
-local dap = require("dap")
 
-local MASON_PATH = vim.fn.stdpath("data") .. "/mason"
-local BASH_DEBUG_ADAPTER_BIN = MASON_PATH .. "/bin/bash-debug-adapter"
-local BASHDB_DIR = MASON_PATH .. "/packages/bash-debug-adapter/extension/bashdb_dir"
+local function find_root(markers, path)
+  local root_file = vim.fs.find(markers, { upward = true, path = path })[1]
+  return root_file and vim.fs.dirname(root_file) or nil
+end
 
 function M.setup()
-  dap.adapters.sh = {
-    type = "executable",
-    command = BASH_DEBUG_ADAPTER_BIN,
-  }
-  dap.configurations.sh = {
-    {
-      name = "Launch Bash debugger",
-      type = "sh",
-      request = "launch",
-      program = "${file}",
-      cwd = "${fileDirname}",
-      pathBashdb = BASHDB_DIR .. "/bashdb",
-      pathBashdbLib = BASHDB_DIR,
-      pathBash = "bash",
-      pathCat = "cat",
-      pathMkfifo = "mkfifo",
-      pathPkill = "pkill",
-      env = {},
-      args = {},
-      -- showDebugOutput = true,
-      -- trace = true,
-    },
-  }
-  -- Debug the python module
+  local dap = require("dap")
+  local mason_path = vim.fn.stdpath("data") .. "/mason"
+  local bash_adapter = mason_path .. "/bin/bash-debug-adapter"
+  local bashdb_dir = mason_path .. "/packages/bash-debug-adapter/extension/bashdb_dir"
+
+  if vim.fn.executable(bash_adapter) == 1 then
+    dap.adapters.sh = {
+      type = "executable",
+      command = bash_adapter,
+    }
+    dap.configurations.sh = {
+      {
+        name = "Launch Bash debugger",
+        type = "sh",
+        request = "launch",
+        program = "${file}",
+        cwd = "${fileDirname}",
+        pathBashdb = bashdb_dir .. "/bashdb",
+        pathBashdbLib = bashdb_dir,
+        pathBash = "bash",
+        pathCat = "cat",
+        pathMkfifo = "mkfifo",
+        pathPkill = "pkill",
+        env = {},
+        args = {},
+      },
+    }
+  end
+
   table.insert(dap.configurations.python, {
     type = "python",
     request = "launch",
     name = "Launch Current Module (Strict)",
     module = function()
-      local root_file = vim.fs.find({ ".git", "pyproject.toml", "requirements.txt" }, {
-        upward = true,
-        path = vim.fn.expand("%:p:h"),
-      })[1]
-
-      if not root_file then
+      local root = find_root({ ".git", "pyproject.toml", "requirements.txt" }, vim.fn.expand("%:p:h"))
+      if not root then
         return nil
       end
-
-      local root = vim.fs.dirname(root_file)
-      local file = vim.fn.expand("%:p")
-
+      local file = vim.fs.normalize(vim.fn.expand("%:p"))
       local rel_path = file:sub(#root + 2)
-
-      local module_path = rel_path:gsub("/", "."):gsub("%.py$", "")
-
-      print("Debug: Executing 'python -m " .. module_path .. "'")
+      local module_path = rel_path:gsub("\\", "/"):gsub("/", "."):gsub("%.py$", "")
       return module_path
     end,
     cwd = function()
-      local root_file = vim.fs.find({ ".git", "pyproject.toml" }, { upward = true, path = vim.fn.expand("%:p:h") })[1]
-      return root_file and vim.fs.dirname(root_file) or vim.fn.getcwd()
+      return find_root({ ".git", "pyproject.toml" }, vim.fn.expand("%:p:h")) or vim.fn.getcwd()
     end,
     console = "integratedTerminal",
   })

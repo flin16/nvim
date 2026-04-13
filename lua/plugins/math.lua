@@ -5,23 +5,27 @@ end
 return {
   {
     "lervag/vimtex",
-    lazy = false, -- we don't want to lazy load VimTeX
+    lazy = false,
     init = function()
       vim.g.vimtex_view_method = "skim"
       vim.g.vimtex_view_skim_sync = 1
       vim.g.vimtex_view_skim_activate = 1
       vim.g.vimtex_latexmk_progname = "nvr"
+      vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
-        out_dir = "build", -- use a separate build directory
-        callback = 1, -- enable callback
-        continuous = 1, -- enable continuous compilation
+        out_dir = "build",
+        callback = 1,
+        continuous = 1,
         options = {
-          "-pdf", -- use pdf output
-          "-shell-escape", -- enable shell escape
-          "-verbose", -- verbose output
-          "-file-line-error", -- file line error messages
+          "-pdf",
+          "-shell-escape",
+          "-verbose",
+          "-file-line-error",
           "-synctex=1",
         },
+      }
+      vim.g.vimtex_compiler_tectonic = {
+        options = { "--synctex" },
       }
       vim.g.vimtex_syntax_custom_cmds = {
         { name = "mb", mathmode = 1, argstyle = "bold", conceal = 1 },
@@ -29,29 +33,32 @@ return {
         { name = "mc", mathmode = 1, argstyle = "ital", conceal = 1 },
         { name = "mk", mathmode = 1, argstyle = "bold", conceal = 1 },
       }
+
+      local function set_vimtex_main()
+        local tex_file = vim.fn.expand("%:p:r")
+        local root = vim.fs.root(vim.fn.expand("%:p:h"), { ".git", ".latexmain" })
+        if not root then
+          root = vim.fn.expand("%:p:h")
+        end
+        local marker = root .. "/.latexmain"
+        local name = vim.fn.fnamemodify(tex_file, ":t")
+        vim.fn.writefile({ name }, marker)
+
+        local method = "latexmk"
+        if vim.fn.executable("tectonic") == 1 then
+          method = "tectonic"
+        end
+        vim.g.vimtex_compiler_method = method
+
+        vim.cmd([[call vimtex#compiler#stop()]])
+        vim.cmd([[call vimtex#compiler#init_state(b:vimtex)]])
+
+        vim.notify("Main: " .. name .. " | Compiler: " .. method, vim.log.levels.INFO)
+      end
+
+      vim.keymap.set("n", "<localleader>lM", set_vimtex_main, { buffer = true })
     end,
   },
-  {
-    "latex-lsp/texlab",
-  },
+  { "latex-lsp/texlab" },
   { "HakonHarnes/img-clip.nvim", ft = { "markdown", "tex" } },
-  -- TODO: make this work
-  -- {
-  --   "pxwg/math-conceal.nvim",
-  --   event = "VeryLazy",
-  --   build = "make lua51",
-  --   main = "math-conceal",
-  --   opts = {
-  --     enabled = true,
-  --     conceal = {
-  --       "greek",
-  --       "script",
-  --       "math",
-  --       "font",
-  --       "delim",
-  --       "phy",
-  --     },
-  --     ft = { "*.tex", "*.md", "*.typ" },
-  --   },
-  -- },
 }
