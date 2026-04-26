@@ -18,7 +18,7 @@ elseif vim.fn.has("wsl") == 1 then
     cache_enabled = 0,
   }
   vim.opt.fileformat = "unix"
-elseif vim.env.SSH_CONNECTION then
+elseif vim.env.SSH_CONNECTION or vim.env.WEZTERM_PANE then
   vim.o.clipboard = "unnamedplus"
   local function paste()
     return {
